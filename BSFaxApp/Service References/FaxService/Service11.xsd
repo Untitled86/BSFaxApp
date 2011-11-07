@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/FaxWebService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/FaxWebService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:51402/Service1.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://localhost:51402/Service1.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="FaxPageChunk">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Chunk" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="PageId" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FaxPageChunk" nillable="true" type="tns:FaxPageChunk" />
+  <xs:complexType name="WSError">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Detail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WSError" nillable="true" type="tns:WSError" />
+  <xs:complexType name="Fax">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ID" type="ser:guid" />
+      <xs:element minOccurs="0" name="Pages" nillable="true" type="tns:ArrayOfFaxPage" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Recipients" nillable="true" type="q1:ArrayOfstring" />
+      <xs:element minOccurs="0" name="SMTPServer" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SMTPServerAuthProtocol" type="tns:Fax.SMTPAuthProtocol" />
+      <xs:element minOccurs="0" name="SMTPServerLogin" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SMTPServerPassword" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SMTPServerPort" type="xs:int" />
+      <xs:element minOccurs="0" name="SMTPServerUseSSL" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Sender" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Fax" nillable="true" type="tns:Fax" />
+  <xs:complexType name="ArrayOfFaxPage">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FaxPage" nillable="true" type="tns:FaxPage" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFaxPage" nillable="true" type="tns:ArrayOfFaxPage" />
+  <xs:complexType name="FaxPage">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ID" type="ser:guid" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FaxPage" nillable="true" type="tns:FaxPage" />
+  <xs:simpleType name="Fax.SMTPAuthProtocol">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Anonymous" />
+      <xs:enumeration value="Basic" />
+      <xs:enumeration value="NTLM" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Fax.SMTPAuthProtocol" nillable="true" type="tns:Fax.SMTPAuthProtocol" />
+  <xs:complexType name="FaxStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ID" type="ser:guid" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FaxStatus" nillable="true" type="tns:FaxStatus" />
+</xs:schema>
